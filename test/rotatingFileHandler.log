@@ -1,0 +1,17 @@
+[INFO] 2015-07-08 11:18:02 logger.py [line:11]----This is info message
+[WARNING] 2015-07-08 11:18:02 logger.py [line:12]----This is warning message
+[INFO] 2015-07-08 13:55:22 logger.py [line:11]----This is info message
+[WARNING] 2015-07-08 13:55:22 logger.py [line:12]----This is warning message
+[INFO] 2015-07-08 14:49:40 logger.py [line:11]----This is info message
+[WARNING] 2015-07-08 14:49:40 logger.py [line:12]----This is warning message
+[INFO] 2015-07-08 14:53:43 logger.py [line:11]----This is info message
+[WARNING] 2015-07-08 14:53:43 logger.py [line:12]----This is warning message
+[DEBUG] 2015-07-08 14:54:13 logger.py [line:10]----This is debug message
+[INFO] 2015-07-08 14:54:13 logger.py [line:11]----This is info message
+[WARNING] 2015-07-08 14:54:13 logger.py [line:12]----This is warning message
+[DEBUG] 2015-07-08 14:54:13 logger.py [line:15]----this is 1
+[DEBUG] 2015-07-09 11:47:40 logger.py [line:10]----This is debug message
+[INFO] 2015-07-09 11:47:40 logger.py [line:11]----This is info message
+[WARNING] 2015-07-09 11:47:40 logger.py [line:12]----This is warning message
+[DEBUG] 2015-07-09 11:47:40 logger.py [line:15]----this is 1
+[DEBUG] 2015-07-09 11:47:40 logger.py [line:18]----{'aaa': 1, 'bbb': 2}

@@ -1,0 +1,68 @@
+#!/usr/bin/python
+
+import Queue
+
+class statsItem():
+	def __init__(self,windowLength=12):
+		self.totalWindowStats = [0,0,0]
+		self.totalDayStats = [0,0,0]
+		self.tempWindowStats = [0,0,0]
+		self.windowLength = windowLength
+		self.windowQueueStats = [Queue.Queue(windowLength),Queue.Queue(windowLength),Queue.Queue(windowLength)]
+		for i in range(3):
+			for j in range(windowLength):
+				self.windowQueueStats[i].put(0)
+		self.trueMark = "1"
+		self.falseMark = "-1"
+	def update(self,clickStatus,achieveStatus):
+		self.totalDayStats[0] += 1
+		self.tempWindowStats[0] += 1
+		if achieveStatus == self.trueMark:
+			for i in range(1,3):
+				self.totalDayStats[i] += 1
+				self.tempWindowStats[i] += 1
+		elif clickStatus == self.trueMark:
+			self.totalDayStats[1] += 1
+			self.tempWindowStats[1] += 1 
+	def proDayStats(self):
+		if self.totalDayStats[0] == 0:
+			print "[warning] day expo stats data is empty"
+			return 0,0
+		ctr = float(self.totalDayStats[1])/float(self.totalDayStats[0])
+		rpm = float(self.totalDayStats[2])/float(self.totalDayStats[0])
+		return ctr,rpm
+	def proWindowStats(self):
+		for i in range(3):
+			self.totalWindowStats[i] -= self.windowQueueStats[i].get()
+			self.totalWindowStats[i] += self.tempWindowStats[i]
+			self.windowQueueStats[i].put(self.tempWindowStats[i])
+		if self.totalWindowStats[0] == 0:
+			print "[warning] temp window expo stats data is empty"
+			return 0,0
+		ctr = float(self.totalWindowStats[1])/float(self.totalWindowStats[0])
+		rpm = float(self.totalWindowStats[2])/float(self.totalWindowStats[0])
+		return ctr,rpm
+	def flushDayStats(self):
+		self.totalDayStats = [0,0,0]
+	def flushTempWindowStats(self):
+		self.tempWindowStats = [0,0,0]
+		
+if __name__ == "__main__":
+	myStatsItem = statsItem(2)
+	for i in range(1000):
+		if i%100 == 0:
+			ctr,rpm = myStatsItem.proDayStats()
+			myStatsItem.flushDayStats()
+			print "PERDAY--- ctrValue: %.3f | rpmValue: %.3f"%(ctr,rpm)
+		if i%60 == 0:
+			ctr,rpm = myStatsItem.proWindowStats()
+			myStatsItem.flushTempWindowStats()
+			print "PERWINDOW--- ctrValue: %.3f | rpmValue: %.3f"%(ctr,rpm)
+		if i%5 == 0:
+			myStatsItem.update("1","-1")
+		elif i%12 == 0:
+			myStatsItem.update("1","1")
+		else:
+			myStatsItem.update("-1","-1")
+
+
